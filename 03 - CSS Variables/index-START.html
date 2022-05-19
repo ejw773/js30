@@ -24,7 +24,17 @@
       :root {
         --base: crimson;
         --spacing: 10px;
-        --filter: blur(10px);
+        --blur: 10px;
+      }
+
+      img {
+        padding: var(--spacing);
+        background-color: var(--base);
+        filter: blur(var(--blur));
+      }
+
+      .hl {
+        color: var(--base);
       }
 
       /*
@@ -51,7 +61,7 @@
 
     <script>
       const handleChange = () => {
-        console.log(this.target.value);
+        console.log(this.dataset);
       };
       const controls = document.querySelectorAll('.controls input');
       controls.forEach((control) => control.addEventListener('change', handleChange));
