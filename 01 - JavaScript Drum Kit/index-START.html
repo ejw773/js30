@@ -44,7 +44,6 @@
         <span class="sound">tink</span>
       </div>
     </div>
-
     <audio data-key="65" src="sounds/clap.wav"></audio>
     <audio data-key="83" src="sounds/hihat.wav"></audio>
     <audio data-key="68" src="sounds/kick.wav"></audio>
@@ -56,28 +55,21 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
-      const endBoom = (e) => {
+      const makeSound = (e) => {
+        let audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+        let key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+        key.classList.add('playing');
+      };
+      const removeAnimation = (e) => {
         if (e.propertyName != 'transform') return;
         e.target.classList.remove('playing');
       };
-
-      const littleBoom = (theCode) => {
-        const pressedKey = document.querySelectorAll(`div[data-key="${theCode}"]`);
-        const keyDiv = pressedKey[0];
-        keyDiv.classList.add('playing');
-      };
-
-      const handleKeydown = (e) => {
-        const audio = document.querySelectorAll(`audio[data-key="${e.keyCode}"]`);
-        const audioFile = audio[0];
-        if (!audioFile) return;
-        littleBoom(e.keyCode);
-        audioFile.currentTime = 0;
-        audioFile.play();
-      };
-
-      document.addEventListener('keydown', handleKeydown);
-      window.addEventListener('transitionend', (e) => endBoom(e));
+      const keyList = Array.from(document.querySelectorAll('.key'));
+      keyList.forEach((key) => key.addEventListener('transitionend', removeAnimation));
+      window.addEventListener('keydown', makeSound);
     </script>
   </body>
 </html>
