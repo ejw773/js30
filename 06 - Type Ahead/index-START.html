@@ -30,7 +30,7 @@
       function handleInput() {
         const suggestions = document.querySelector('.suggestions');
         const results = filterCities(this.value, cities);
-        const theStr = results
+        const htmlStr = results
           .map((item) => {
             let regex = new RegExp(this.value, 'gi');
             let theCity = item.city.replace(regex, `<span class="hl">${this.value}</span>`);
@@ -39,11 +39,10 @@
             return `<li><span class="name">${theCity}, ${theState}</span><span class="population">${pop}</span></li>`;
           })
           .join('');
-        suggestions.innerHTML = theStr;
+        suggestions.innerHTML = htmlStr;
       }
 
       const searchInput = document.querySelector('.search');
-
       searchInput.addEventListener('keyup', handleInput);
     </script>
   </body>
